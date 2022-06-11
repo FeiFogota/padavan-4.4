@@ -22,6 +22,8 @@ snds_ip_change=$(nvram get snds_ip_change)
 sdns_ipv6=$(nvram get sdns_ipv6)
 sdns_www=$(nvram get sdns_www)
 sdns_exp=$(nvram get sdns_exp)
+sdns_exp_ttl=$(nvram get sdns_exp_ttl)
+sdns_exp_ttl_max=$(nvram get sdns_exp_ttl_max)
 snds_redirect=$(nvram get snds_redirect)
 sdns_cache_persist=$(nvram get sdns_cache_persist)
 snds_cache=$(nvram get snds_cache)
@@ -143,7 +145,6 @@ Get_sdns_conf () {
     echo "rr-ttl $sdns_ttl" >> "$smartdns_tmp_Conf"
     echo "rr-ttl-min $sdns_ttl_min" >> "$smartdns_tmp_Conf"
     echo "rr-ttl-max $sdns_ttl_max" >> "$smartdns_tmp_Conf"
-    echo "tcp-idle-time 120" >> "$smartdns_tmp_Conf"
     if [ "$snds_ip_change" -eq 1 ] ;then
         echo "dualstack-ip-selection yes" >> "$smartdns_tmp_Conf"
         echo "dualstack-ip-selection-threshold $(nvram get snds_ip_change_time)" >> "$smartdns_tmp_Conf"
@@ -163,6 +164,8 @@ Get_sdns_conf () {
     fi
     if [ "$sdns_exp" -eq 1 ] && [ "$snds_cache" -gt 0 ] ;then
         echo "serve-expired yes" >> "$smartdns_tmp_Conf"
+        echo "serve-expired-ttl $sdns_exp_ttl" >> "$smartdns_tmp_Conf"
+        echo "serve-expired-reply-ttl $sdns_exp_ttl_max" >> "$smartdns_tmp_Conf"
     else
         echo "serve-expired no" >> "$smartdns_tmp_Conf"
     fi
