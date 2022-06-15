@@ -1,4 +1,4 @@
-SRC_NAME = smartdns-ba282c8
+SRC_NAME = smartdns-all-best-ip
 THISDIR = $(shell pwd)
 
 all: extract_test config_test
